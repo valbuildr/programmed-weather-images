@@ -254,9 +254,9 @@ async def create_4_by_3(save_to: str, imperial: bool = True, location: str = "10
 
     disclaimer = ""
     if imperial:
-        disclaimer = "All temperatures are in Celsius unless otherwise noted."
-    else:
         disclaimer = "All temperatures are in Fahrenheit unless otherwise noted."
+    else:
+        disclaimer = "All temperatures are in Celsius unless otherwise noted."
     
     credit = ""
     if season == "Fall":
