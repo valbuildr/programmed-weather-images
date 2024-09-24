@@ -21,7 +21,7 @@ async def on_ready():
 async def make_4_3(interaction: discord.Interaction, location: str, imperial: bool = True):
     if str(interaction.user.id) in beta_testers:
         try:
-            f = await generate_weather_image.create_4_by_3(f"./generated_images/{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
+            f = generate_weather_image.create_4_by_3(f"./generated_images/{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
         except Exception as err:
             e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
             e.description = f"```\n{err}\n```"

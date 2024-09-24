@@ -124,7 +124,7 @@ def get_season(data):
     else:
         raise Exception("Unexpected month")
 
-async def create_4_by_3(save_to: str, imperial: bool = True, location: str = "10001"):
+def create_4_by_3(save_to: str, imperial: bool = True, location: str = "10001"):
     # api
     r = get(
         "http://api.weatherapi.com/v1/current.json",
