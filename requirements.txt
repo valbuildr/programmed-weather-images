@@ -1,4 +1,0 @@
-pillow
-tzdata
-requests
-discord.py
