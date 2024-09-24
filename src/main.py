@@ -3,7 +3,7 @@ from discord.ext import commands
 import generate_weather_image
 from datetime import datetime
 
-api_key = open("./src/discord_token.txt", "r").read()
+api_key = open("./src/discord_token.txt", "r").read().replace("\n" , "")
 
 bot = commands.Bot(command_prefix="=", intents=discord.Intents(messages=True, message_content=True))
 
@@ -11,7 +11,7 @@ beta_testers = open("./src/beta_testers.txt", "r").read().split("\n")
 
 bot.remove_command("help")
 
-browhat_emoji_id = open("./src/browhat_emoji_id.txt", "r").read()
+browhat_emoji_id = open("./src/browhat_emoji_id.txt", "r").read().replace("\n" , "")
 
 
 @bot.event

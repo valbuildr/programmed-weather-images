@@ -1,3 +1,7 @@
+## Beta 0.3.1
+
+- Replace all new lines with blank in token and browhat emoji id.
+
 ## Beta 0.3
 
 - Add/remove beta testers without having to edit text file
