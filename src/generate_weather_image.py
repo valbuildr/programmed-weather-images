@@ -3,7 +3,7 @@ from random import choice
 from requests import get
 from discord import File
 
-api_key = open("./weather_token.txt", "r").read()
+api_key = open("./src/weather_token.txt", "r").read()
 
 
 icons = {
@@ -150,25 +150,25 @@ def create_4_by_3(save_to: str, imperial: bool = True, location: str = "10001"):
 
     # background
     c = choice(["1", "2", "3"])
-    img = Image.open(f"./assets/bg/cut/4-3/{season}{c}.png")
+    img = Image.open(f"./src/assets/bg/cut/4-3/{season}{c}.png")
 
     # transparent elements
-    img2 = Image.open("./reference/4-3/template-4_3.png")
+    img2 = Image.open("./src/reference/4-3/template-4_3.png")
 
     # text and icons
     img3 = Image.new("RGBA", img.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(img3)
 
     # city name
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Bold.ttf", 38)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Bold.ttf", 38)
     draw.text((51, 59), data["location"]["name"], font=font, anchor="lt", align="left")
 
     # clock
-    font = ImageFont.truetype("./assets/fonts/JetBrainsMono-Bold.ttf", 38)
+    font = ImageFont.truetype("./src/assets/fonts/JetBrainsMono-Bold.ttf", 38)
     draw.text((860, 59), data["location"]["localtime"].split(" ")[1], font=font, anchor="lt", align="left")
 
     # now text
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 21)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 21)
     draw.text((63, 158), "Now", font=font, anchor="lt", align="left")
 
     # circle
@@ -179,79 +179,79 @@ def create_4_by_3(save_to: str, imperial: bool = True, location: str = "10001"):
     if data["current"]["is_day"] == 1:
         t = "day"
     icon = icons[t][data["current"]["condition"]["text"]]
-    iconImg = Image.open(f"./assets/icons/4-3/{icon}.png")
+    iconImg = Image.open(f"./src/assets/icons/4-3/{icon}.png")
     img3.paste(iconImg, (106, 295), iconImg)
 
     # temperature text
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Bold.ttf", 46)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Bold.ttf", 46)
     if imperial:
         draw.text((176, 439), str(round(data["current"]["temp_f"])), font=font, anchor="mt", align="center")
     else:
         draw.text((176, 439), str(round(data["current"]["temp_c"])), font=font, anchor="mt", align="center")
 
     # condition text
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Bold.ttf", 46)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Bold.ttf", 46)
     draw.text((325, 220), data["current"]["condition"]["text"], font=font, anchor="lt", align="left")
 
     # winds
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 36)
     draw.text((325, 288), "Winds", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 36)
     if imperial:
         draw.text((513, 288), f"{str(round(data["current"]["wind_mph"]))} mph {data["current"]["wind_dir"]}", font=font, anchor="lt", align="left")
     else:
         draw.text((513, 288), f"{str(round(data["current"]["wind_kph"]))} kph {data["current"]["wind_dir"]}", font=font, anchor="lt", align="left")
     
     # humidity
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 36)
     draw.text((325, 327), "Humidity", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 36)
     draw.text((513, 327), f"{data["current"]["humidity"]}%", font=font, anchor="lt", align="left")
 
     # feels like
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 36)
     draw.text((325, 366), "Feels like", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 36)
     if imperial:
         draw.text((513, 366), f"{str(round(data["current"]["feelslike_f"]))}°", font=font, anchor="lt", align="left")
     else:
         draw.text((513, 366), f"{str(round(data["current"]["feelslike_c"]))}°", font=font, anchor="lt", align="left")
 
     # dewpoint
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 36)
     draw.text((325, 405), "Dewpoint", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 36)
     if imperial:
         draw.text((513, 405), f"{str(round(data["current"]["dewpoint_f"]))}°", font=font, anchor="lt", align="left")
     else:
         draw.text((513, 405), f"{str(round(data["current"]["dewpoint_c"]))}°", font=font, anchor="lt", align="left")
 
     # visibility
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 36)
     draw.text((325, 444), "Visibility", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 36)
     if imperial:
         draw.text((513, 444), f"{data["current"]["vis_miles"]} mi", font=font, anchor="lt", align="left")
     else:
         draw.text((513, 444), f"{data["current"]["vis_km"]} km", font=font, anchor="lt", align="left")
     
     # uv
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 36)
     draw.text((325, 483), "UV", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 36)
     draw.text((513, 483), f"{round(data["current"]["uv"])}", font=font, anchor="lt", align="left")
 
     # pressure
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 36)
     draw.text((325, 522), "Pressure", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 36)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 36)
     if imperial:
         draw.text((513, 522), f"{data["current"]["pressure_in"]} in", font=font, anchor="lt", align="left")
     else:
         draw.text((513, 522), f"{data["current"]["pressure_mb"]} mb", font=font, anchor="lt", align="left")
 
     # credit and disclaimer
-    font = ImageFont.truetype("./assets/fonts/JetBrainsMono-Italic.ttf", 15)
+    font = ImageFont.truetype("./src/assets/fonts/JetBrainsMono-Italic.ttf", 15)
 
     disclaimer = ""
     if imperial:
@@ -328,25 +328,25 @@ def create_16_by_9(save_to: str, imperial: bool = True, location: str = "10001")
 
     # background
     c = choice(["1", "2", "3"])
-    img = Image.open(f"./assets/bg/cut/16-9/{season}{c}.png")
+    img = Image.open(f"./src/assets/bg/cut/16-9/{season}{c}.png")
 
     # transparent elements
-    img2 = Image.open("./reference/16-9/template-16_9.png")
+    img2 = Image.open("./src/reference/16-9/template-16_9.png")
 
     # text and icons
     img3 = Image.new("RGBA", img.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(img3)
 
     # city name
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Bold.ttf", 53)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Bold.ttf", 53)
     draw.text((312, 83), data["location"]["name"], font=font, anchor="lt", align="left")
 
     # clock
-    font = ImageFont.truetype("./assets/fonts/JetBrainsMono-Bold.ttf", 53)
+    font = ImageFont.truetype("./src/assets/fonts/JetBrainsMono-Bold.ttf", 53)
     draw.text((1450, 83), data["location"]["localtime"].split(" ")[1], font=font, anchor="lt", align="left")
 
     # now text
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 30)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 30)
     draw.text((329, 222), "Now", font=font, anchor="lt", align="left")
 
     # circle
@@ -357,79 +357,79 @@ def create_16_by_9(save_to: str, imperial: bool = True, location: str = "10001")
     if data["current"]["is_day"] == 1:
         t = "day"
     icon = icons[t][data["current"]["condition"]["text"]]
-    iconImg = Image.open(f"./assets/icons/16-9/{icon}.png")
+    iconImg = Image.open(f"./src/assets/icons/16-9/{icon}.png")
     img3.paste(iconImg, (399, 435), iconImg)
 
     # temperature text
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Bold.ttf", 64)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Bold.ttf", 64)
     if imperial:
         draw.text((487, 603), str(round(data["current"]["temp_f"])), font=font, anchor="mt", align="center")
     else:
         draw.text((487, 603), str(round(data["current"]["temp_c"])), font=font, anchor="mt", align="center")
 
     # condition text
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Bold.ttf", 64)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Bold.ttf", 64)
     draw.text((697, 309), data["current"]["condition"]["text"], font=font, anchor="lt", align="left")
 
     # winds
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 51)
     draw.text((697, 405), "Winds", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 51)
     if imperial:
         draw.text((961, 405), f"{str(round(data["current"]["wind_mph"]))} mph {data["current"]["wind_dir"]}", font=font, anchor="lt", align="left")
     else:
         draw.text((961, 405), f"{str(round(data["current"]["wind_kph"]))} kph {data["current"]["wind_dir"]}", font=font, anchor="lt", align="left")
     
     # humidity
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 51)
     draw.text((697, 459), "Humidity", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 51)
     draw.text((961, 459), f"{data["current"]["humidity"]}%", font=font, anchor="lt", align="left")
 
     # feels like
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 51)
     draw.text((697, 514), "Feels like", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 51)
     if imperial:
         draw.text((961, 514), f"{str(round(data["current"]["feelslike_f"]))}°", font=font, anchor="lt", align="left")
     else:
         draw.text((961, 514), f"{str(round(data["current"]["feelslike_c"]))}°", font=font, anchor="lt", align="left")
     
     # dewpoint
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 51)
     draw.text((697, 568), "Dewpoint", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 51)
     if imperial:
         draw.text((961, 568), f"{str(round(data["current"]["dewpoint_f"]))}°", font=font, anchor="lt", align="left")
     else:
         draw.text((961, 568), f"{str(round(data["current"]["dewpoint_c"]))}°", font=font, anchor="lt", align="left")
     
     # visibility
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 51)
     draw.text((697, 622), "Visibility", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 51)
     if imperial:
         draw.text((961, 622), f"{data["current"]["vis_miles"]} mi", font=font, anchor="lt", align="left")
     else:
         draw.text((961, 622), f"{data["current"]["vis_km"]} km", font=font, anchor="lt", align="left")
     
     # uv
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 51)
     draw.text((697, 676), "UV", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 51)
     draw.text((961, 676), f"{round(data["current"]["uv"])}", font=font, anchor="lt", align="left")
 
     # pressure
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-SemiBold.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-SemiBold.ttf", 51)
     draw.text((697, 731), "Pressure", font=font, anchor="lt", align="left")
-    font = ImageFont.truetype("./assets/fonts/InstrumentSans-Regular.ttf", 51)
+    font = ImageFont.truetype("./src/assets/fonts/InstrumentSans-Regular.ttf", 51)
     if imperial:
         draw.text((961, 731), f"{data["current"]["pressure_in"]} in", font=font, anchor="lt", align="left")
     else:
         draw.text((961, 731), f"{data["current"]["pressure_mb"]} mb", font=font, anchor="lt", align="left")
     
     # credit and disclaimer
-    font = ImageFont.truetype("./assets/fonts/JetBrainsMono-Italic.ttf", 21)
+    font = ImageFont.truetype("./src/assets/fonts/JetBrainsMono-Italic.ttf", 21)
 
     disclaimer = ""
     if imperial:
