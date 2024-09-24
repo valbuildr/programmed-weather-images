@@ -263,7 +263,7 @@ async def create_4_by_3(save_to: str, imperial: bool = True, location: str = "10
         if c == "1":
             credit = "Photo by Pixabay via Pexels."
         elif c == "2":
-            credit = "Photo by 대정 김 via Pexels."
+            credit = "Photo by Chait Goli via Pexels."
         elif c == "3":
             credit = "Photo by Craig Adderley via Pexels."
     elif season == "Spring":
