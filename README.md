@@ -4,7 +4,7 @@ A simple Discord bot that generates an image with the current conditions in a ce
 
 Supports imperial and metric units.
 
-The public bot is currently in a closed beta until the code is more refined.
+The public bot is currently in a closed beta until the code is more refined. If you'd like to host the bot yourself, read [HOSTING.md](./HOSTING.md)
 
 Licensed under the [MIT License](./LICENSE).
 
