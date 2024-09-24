@@ -21,7 +21,25 @@ async def on_ready():
 async def make_4_3(interaction: discord.Interaction, location: str, imperial: bool = True):
     if str(interaction.user.id) in beta_testers:
         try:
-            f = generate_weather_image.create_4_by_3(f"./generated_images/{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
+            f = generate_weather_image.create_4_by_3(f"./generated_images/4-3_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
+        except Exception as err:
+            e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
+            e.description = f"```\n{err}\n```"
+            await interaction.response.send_message(embed=e, ephemeral=True)
+            return
+        
+        await interaction.response.defer(ephemeral=False)
+        await interaction.followup.send(file=f)
+    else:
+        await interaction.response.send_message(content="This bot is in a closed beta.", ephemeral=True)
+
+@bot.tree.command(name="16-by-9", description="Generates a 16:9 image with the current conditions at a location.")
+@discord.app_commands.describe(location="Pass US Zipcode, UK Postcode, Canada Postalcode, IP address, Latitude/Longitude or city name.",
+                               imperial="Use imperial measurements. (mph, miles, fahrenheit) Default: True")
+async def make_16_9(interaction: discord.Interaction, location: str, imperial: bool = True):
+    if str(interaction.user.id) in beta_testers:
+        try:
+            f = generate_weather_image.create_16_by_9(f"./generated_images/16-9_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
         except Exception as err:
             e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
             e.description = f"```\n{err}\n```"
