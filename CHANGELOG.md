@@ -1,3 +1,7 @@
+## Beta 0.4
+
+- Combine commands to one command, `/weather`. Switch between 4:3 and 16:9 with the `size` variable.
+
 ## Beta 0.3.1
 
 - Replace all new lines with blank in token and browhat emoji id.

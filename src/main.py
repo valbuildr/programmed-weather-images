@@ -5,7 +5,7 @@ from datetime import datetime
 
 api_key = open("./src/discord_token.txt", "r").read().replace("\n" , "")
 
-bot = commands.Bot(command_prefix="=", intents=discord.Intents(messages=True, message_content=True))
+bot = commands.Bot(command_prefix="+", intents=discord.Intents(messages=True, message_content=True))
 
 beta_testers = open("./src/beta_testers.txt", "r").read().split("\n")
 
@@ -19,46 +19,39 @@ async def on_ready():
     print(f"Logged in as {bot.user.name}")
 
 
-@bot.tree.command(name="4-by-3", description="Generates a 4:3 image with the current conditions at a location.")
+@bot.tree.command(name="current", description="Generates an image with the current conditions at a location.")
 @discord.app_commands.describe(location="Pass US Zipcode, UK Postcode, Canada Postalcode, IP address, Latitude/Longitude or city name.",
-                               imperial="Use imperial measurements. (mph, miles, fahrenheit) Default: True")
+                               size="The size of the image.",
+                               imperial="Use imperial measurements. (mph, mi, fahrenheit) Default: True")
+@discord.app_commands.choices(size=[
+    discord.app_commands.Choice(name="4:3 (1024x768)", value=0),
+    discord.app_commands.Choice(name="16:9 (1920x1080)", value=1),
+])
 @discord.app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @discord.app_commands.user_install()
-async def make_4_3(interaction: discord.Interaction, location: str, imperial: bool = True):
+async def make(interaction: discord.Interaction, location: str, size: int = 0, imperial: bool = True):
     if str(interaction.user.id) in beta_testers:
-        try:
-            f = generate_weather_image.create_4_by_3(f"./src/generated_images/4-3_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
-        except Exception as err:
-            e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
-            e.description = f"```\n{err}\n```"
-            await interaction.response.send_message(embed=e, ephemeral=True)
-            return
+        if size == 1:
+            try:
+                f = generate_weather_image.create_16_by_9(f"./src/generated_images/16-9_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
+            except Exception as err:
+                e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
+                e.description = f"```\n{err}\n```"
+                await interaction.response.send_message(embed=e, ephemeral=True)
+                return
+        else:
+            try:
+                f = generate_weather_image.create_4_by_3(f"./src/generated_images/4-3_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
+            except Exception as err:
+                e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
+                e.description = f"```\n{err}\n```"
+                await interaction.response.send_message(embed=e, ephemeral=True)
+                return
         
         await interaction.response.defer(ephemeral=False)
         await interaction.followup.send(file=f)
     else:
-        await interaction.response.send_message(content="This bot is in a closed beta.", ephemeral=True)
-
-
-@bot.tree.command(name="16-by-9", description="Generates a 16:9 image with the current conditions at a location.")
-@discord.app_commands.describe(location="Pass US Zipcode, UK Postcode, Canada Postalcode, IP address, Latitude/Longitude or city name.",
-                               imperial="Use imperial measurements. (mph, miles, fahrenheit) Default: True")
-@discord.app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-@discord.app_commands.user_install()
-async def make_16_9(interaction: discord.Interaction, location: str, imperial: bool = True):
-    if str(interaction.user.id) in beta_testers:
-        try:
-            f = generate_weather_image.create_16_by_9(f"./src/generated_images/16-9_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
-        except Exception as err:
-            e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
-            e.description = f"```\n{err}\n```"
-            await interaction.response.send_message(embed=e, ephemeral=True)
-            return
-        
-        await interaction.response.defer(ephemeral=False)
-        await interaction.followup.send(file=f)
-    else:
-        await interaction.response.send_message(content="This bot is in a closed beta.", ephemeral=True)
+        await interaction.response.send_message(content="This bot is in a closed beta. Contact the owner about accessing it.", ephemeral=True)
 
 
 @bot.command()
