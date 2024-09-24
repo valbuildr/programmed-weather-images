@@ -11,6 +11,8 @@ beta_testers = open("./src/beta_testers.txt", "r").read().split("\n")
 
 bot.remove_command("help")
 
+browhat_emoji_id = open("./src/browhat_emoji_id.txt", "r").read()
+
 
 @bot.event
 async def on_ready():
@@ -171,6 +173,11 @@ async def del_bt(ctx: commands.Context, uid: int):
         view.message = message
     else:
         await ctx.send(content=f"{user.mention} ({user.name}) is not on the beta tester list.")
+
+
+@bot.command()
+async def ht(ctx: commands.Context):
+    await ctx.send(content=f"hawk tuah <:browhat:{browhat_emoji_id}>")
 
     
 bot.run(api_key)
