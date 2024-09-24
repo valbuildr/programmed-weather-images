@@ -33,7 +33,7 @@ async def make(interaction: discord.Interaction, location: str, size: int = 0, i
     if str(interaction.user.id) in beta_testers:
         if size == 1:
             try:
-                f = generate_weather_image.create_16_by_9(f"./src/generated_images/16-9_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
+                f = generate_weather_image.current_169(f"./src/generated_images/16-9_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
             except Exception as err:
                 e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
                 e.description = f"```\n{err}\n```"
@@ -41,7 +41,7 @@ async def make(interaction: discord.Interaction, location: str, size: int = 0, i
                 return
         else:
             try:
-                f = generate_weather_image.create_4_by_3(f"./src/generated_images/4-3_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
+                f = generate_weather_image.current_43(f"./src/generated_images/4-3_{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
             except Exception as err:
                 e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
                 e.description = f"```\n{err}\n```"
