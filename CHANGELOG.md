@@ -1,3 +1,10 @@
+## Beta 0.3
+
+- Add/remove beta testers without having to edit text file
+- User app functionality
+- Hawk Tuah easter egg (dont blame me, blame play and allison)
+- Changed paths so the program can now be ran in the main folder
+
 ## Beta 0.2
 
 - 16:9 generation
