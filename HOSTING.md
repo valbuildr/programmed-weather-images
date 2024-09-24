@@ -28,12 +28,13 @@
 
 1. Download the code from the [releases tab](https://github.com/valbuildr/programmed-weather-images/releases). *Get the "Source code (zip)" file.*
 2. Unzip the file you just downloaded and open the folder you unzipped it to.
-3. Create `weather_token.txt` and paste in your [weatherapi.com token](#obtaining-a-weatherapicom-token). **Make sure to not add an extra line at the start or end. The file should <ins>only</ins> contains the token.**
-4. Create `discord_token.txt` and paste in your [Discord bot token](#obtaining-a-discord-bot-token). **Make sure to not add an extra line at the start or end. The file should <ins>only</ins> contains the token.**
-5. Create `beta_testers.txt` and add certain Discord User's ID into the file, sperated by a new line.
+3. In the `src` folder, create `weather_token.txt` and paste in your [weatherapi.com token](#obtaining-a-weatherapicom-token). **Make sure to not add an extra line at the start or end. The file should <ins>only</ins> contains the token.**
+4. In the `src` folder, create `discord_token.txt` and paste in your [Discord bot token](#obtaining-a-discord-bot-token). **Make sure to not add an extra line at the start or end. The file should <ins>only</ins> contains the token.**
+5. In the `src` folder, create `beta_testers.txt` and add certain Discord User's ID into the file, sperated by a new line.
 6. Create a new virtual environment with Python by running `python -m venv .venv/` in a terminal.
 7. Activate the vitual environment. *(See [this page](https://docs.python.org/3/library/venv.html#how-venvs-work) for how to do that.)*
 8. Download the required packages by running `pip install -r requirements.txt`.
+9. Move your terminal to be in the `src` folder with `cd src`.
 9. Run the bot by running `python main.py`.
 
 ## Need help?
