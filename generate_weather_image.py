@@ -1,8 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from random import choice
 from requests import get
-from io import BytesIO
-from urllib.request import urlopen
+from discord import File
 
 api_key = open("./weather_token.txt", "r").read()
 
@@ -59,7 +58,7 @@ icons = {
         "Moderate or heavy snow with thunder": "wi-lightning",
     },
     "night": {
-        "Clear": "wi-night-sunny",
+        "Clear": "wi-night-clear",
         "Partly cloudy": "wi-night-cloudy",
         "Cloudy": "wi-cloud",
         "Overcast": "wi-cloud",
@@ -125,7 +124,7 @@ def get_season(data):
     else:
         raise Exception("Unexpected month")
 
-def create_4_by_3(save_to: str, imperial: bool = True, location: str = "10001"):
+async def create_4_by_3(save_to: str, imperial: bool = True, location: str = "10001"):
     # api
     r = get(
         "http://api.weatherapi.com/v1/current.json",
@@ -298,5 +297,7 @@ def create_4_by_3(save_to: str, imperial: bool = True, location: str = "10001"):
 
     # save image
     img.save(save_to, "png")
+
+    return File(save_to)
 
 # TODO: 16:9

@@ -12,18 +12,19 @@ async def on_ready():
     print(f"Logged in as {bot.user.name}")
 
 @bot.tree.command(name="4-by-3", description="Generates a 4:3 image with the current conditions at a location.")
-@discord.app_commands.describe(location="Pass US Zipcode, UK Postcode, Canada Postalcode, IP address, Latitude/Longitude or city name.")
-async def make_4_3(interaction: discord.Interaction, location: str):
+@discord.app_commands.describe(location="Pass US Zipcode, UK Postcode, Canada Postalcode, IP address, Latitude/Longitude or city name.",
+                               imperial="Use imperial measurements. (mph, miles, fahrenheit) Default: True")
+async def make_4_3(interaction: discord.Interaction, location: str, imperial: bool = True):
     try:
-        generate_weather_image.create_4_by_3(f"./generated_images/{interaction.user.id}_{int(datetime.now().timestamp())}.png")
-    except Exception as e:
+        f = await generate_weather_image.create_4_by_3(f"./generated_images/{interaction.user.id}_{int(datetime.now().timestamp())}.png", imperial, location)
+    except Exception as err:
         e = discord.Embed(title="An error ocurred.", colour=discord.Colour.brand_red())
-        e.description = f"```\n{e}\n```"
+        e.description = f"```\n{err}\n```"
         await interaction.response.send_message(embed=e, ephemeral=True)
         return
     
     await interaction.response.defer(ephemeral=False)
-    await interaction.followup.send(file=discord.File(f"./generated_images/{interaction.user.id}_{int(datetime.now().timestamp())}.png"))
+    await interaction.followup.send(file=f)
 
 @bot.command()
 @commands.is_owner()
@@ -32,4 +33,4 @@ async def sync(ctx: commands.Context):
     await bot.tree.sync()
     await ctx.send(content="Synced...")
     
-bot.login(api_key)
+bot.run(api_key)
