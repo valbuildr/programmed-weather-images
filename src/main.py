@@ -20,6 +20,8 @@ async def on_ready():
 @bot.tree.command(name="4-by-3", description="Generates a 4:3 image with the current conditions at a location.")
 @discord.app_commands.describe(location="Pass US Zipcode, UK Postcode, Canada Postalcode, IP address, Latitude/Longitude or city name.",
                                imperial="Use imperial measurements. (mph, miles, fahrenheit) Default: True")
+@discord.app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+@discord.app_commands.user_install()
 async def make_4_3(interaction: discord.Interaction, location: str, imperial: bool = True):
     if str(interaction.user.id) in beta_testers:
         try:
@@ -39,6 +41,8 @@ async def make_4_3(interaction: discord.Interaction, location: str, imperial: bo
 @bot.tree.command(name="16-by-9", description="Generates a 16:9 image with the current conditions at a location.")
 @discord.app_commands.describe(location="Pass US Zipcode, UK Postcode, Canada Postalcode, IP address, Latitude/Longitude or city name.",
                                imperial="Use imperial measurements. (mph, miles, fahrenheit) Default: True")
+@discord.app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+@discord.app_commands.user_install()
 async def make_16_9(interaction: discord.Interaction, location: str, imperial: bool = True):
     if str(interaction.user.id) in beta_testers:
         try:
