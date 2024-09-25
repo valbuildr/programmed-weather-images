@@ -1,3 +1,7 @@
+# ⚠️ This is an abandoned project!
+
+This project has been abandoned and will no longer receive updates.
+
 # programmed-weather-images
 
 A simple Discord bot that generates an image with the current conditions in a certain city.
